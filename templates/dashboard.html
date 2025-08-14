@@ -3,32 +3,62 @@
 <html>
 <head>
     <title>Production Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #eee;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Production Dashboard</h1>
-    <form method="GET">
-        <label>Filter by Date:</label>
-        <input type="date" name="date">
-        <label>Filter by Shift:</label>
-        <select name="shift">
-            <option value="">All</option>
-            <option value="Shift 1">Shift 1</option>
-            <option value="Shift 2">Shift 2</option>
-        </select>
-        <button type="submit">Filter</button>
-    </form>
+    <h1>Production Metrics Dashboard</h1>
     <table>
-        <tr><th>Date</th><th>Shift</th><th>Units Produced</th></tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Ops</th>
+                <th>Time</th>
+                <th>Vial Number</th>
+                <th>Shipper Number</th>
+                <th>Unit Number</th>
+                <th>Hourly Produced</th>
+                <th>Zed 1 Rejects</th>
+                <th>Zed 2 Rejects</th>
+                <th>Z%</th>
+                <th>Machine Rejects (M%)</th>
+                <th>Scale Rejects (S%)</th>
+                <th>Print Rejects (P%)</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be inserted here dynamically -->
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">Current/Total</td>
+                <td><!-- Total Hourly Produced --></td>
+                <td><!-- Total Zed 1 Rejects --></td>
+                <td><!-- Total Zed 2 Rejects --></td>
+                <td><!-- Total Z% --></td>
+                <td><!-- Total M% --></td>
+                <td><!-- Total S% --></td>
+                <td><!-- Total P% --></td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
-    <br>
-    <a href="{{ url_for('form') }}">Back to Form</a>
 </body>
 </html>
