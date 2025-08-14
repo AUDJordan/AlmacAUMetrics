@@ -1,14 +1,14 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 import psycopg2
 import os
 
 app = Flask(__name__)
 
-# Database connection parameters
-DB_NAME = os.getenv("DB_NAME", "your_db_name")
-DB_USER = os.getenv("DB_USER", "your_db_user")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "your_db_password")
-DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT", "5432")
 
 def get_db_connection():
@@ -26,9 +26,27 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS production (
             id SERIAL PRIMARY KEY,
-            date TEXT NOT NULL,
-            shift TEXT NOT NULL,
-            units_produced INTEGER NOT NULL
+            date TEXT,
+            room TEXT,
+            shift TEXT,
+            works_order TEXT,
+            product_code TEXT,
+            last_unit_number INTEGER,
+            hourly_target INTEGER,
+            daily_target INTEGER,
+            ops TEXT,
+            time TEXT,
+            vial_number TEXT,
+            shipper_number TEXT,
+            unit_number TEXT,
+            hourly_produced INTEGER,
+            zed1_rejects INTEGER,
+            zed2_rejects INTEGER,
+            zed_percent REAL,
+            machine_rejects REAL,
+            scale_rejects REAL,
+            print_rejects REAL,
+            notes TEXT
         )
     ''')
     conn.commit()
@@ -40,15 +58,17 @@ init_db()
 @app.route('/', methods=['GET', 'POST'])
 def form():
     if request.method == 'POST':
-        date = request.form['date']
-        shift = request.form['shift']
-        units_produced = request.form['units_produced']
+        fields = ['date', 'room', 'shift', 'works_order', 'product_code', 'last_unit_number',
+                  'hourly_target', 'daily_target', 'ops', 'time', 'vial_number', 'shipper_number',
+                  'unit_number', 'hourly_produced', 'zed1_rejects', 'zed2_rejects', 'zed_percent',
+                  'machine_rejects', 'scale_rejects', 'print_rejects', 'notes']
+        values = [request.form.get(field) for field in fields]
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(
-            'INSERT INTO production (date, shift, units_produced) VALUES (%s, %s, %s)',
-            (date, shift, units_produced)
-        )
+        cursor.execute(f'''
+            INSERT INTO production ({", ".join(fields)})
+            VALUES ({", ".join(["%s"] * len(fields))})
+        ''', values)
         conn.commit()
         cursor.close()
         conn.close()
@@ -57,23 +77,26 @@ def form():
 
 @app.route('/dashboard')
 def dashboard():
-    date_filter = request.args.get('date')
-    shift_filter = request.args.get('shift')
-    query = 'SELECT * FROM production WHERE 1=1'
-    params = []
-    if date_filter:
-        query += ' AND date = %s'
-        params.append(date_filter)
-    if shift_filter:
-        query += ' AND shift = %s'
-        params.append(shift_filter)
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute(query, params)
+    cursor.execute('SELECT * FROM production')
     data = cursor.fetchall()
+
+    # Calculate summary totals
+    summary = {
+        'hourly_produced': sum(row[14] or 0 for row in data),
+        'zed1_rejects': sum(row[15] or 0 for row in data),
+        'zed2_rejects': sum(row[16] or 0 for row in data),
+        'zed_percent': round(sum(row[17] or 0 for row in data), 2),
+        'machine_rejects': round(sum(row[18] or 0 for row in data), 2),
+        'scale_rejects': round(sum(row[19] or 0 for row in data), 2),
+        'print_rejects': round(sum(row[20] or 0 for row in data), 2)
+    }
+
     cursor.close()
     conn.close()
-    return render_template('dashboard.html', data=data)
+    return render_template('dashboard.html', data=data, summary=summary)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
