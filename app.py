@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for
 import psycopg2
 import os
@@ -23,7 +22,7 @@ def get_db_connection():
 def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('''
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS production (
             id SERIAL PRIMARY KEY,
             date TEXT,
@@ -48,7 +47,7 @@ def init_db():
             print_rejects REAL,
             notes TEXT
         )
-    ''')
+    """)
     conn.commit()
     cursor.close()
     conn.close()
@@ -56,7 +55,7 @@ def init_db():
 init_db()
 
 @app.route('/', methods=['GET', 'POST'])
-def form():
+def overview():
     if request.method == 'POST':
         fields = ['date', 'room', 'shift', 'works_order', 'product_code', 'last_unit_number',
                   'hourly_target', 'daily_target', 'ops', 'time', 'vial_number', 'shipper_number',
@@ -65,15 +64,15 @@ def form():
         values = [request.form.get(field) for field in fields]
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(f'''
+        cursor.execute(f"""
             INSERT INTO production ({", ".join(fields)})
             VALUES ({", ".join(["%s"] * len(fields))})
-        ''', values)
+        """, values)
         conn.commit()
         cursor.close()
         conn.close()
-        return redirect(url_for('form'))
-    return render_template('overview.html')  # updated
+        return redirect(url_for('overview'))
+    return render_template('overview.html')
 
 @app.route('/dashboard')
 def dashboard():
@@ -94,8 +93,27 @@ def dashboard():
 
     cursor.close()
     conn.close()
-    return render_template('metrics_dashboard.html', data=data, summary=summary)  
+    return render_template('metrics_dashboard.html', data=data, summary=summary)
+
+@app.route('/bavs_report')
+def bavs_report():
+    return render_template('bavs_report.html')
+
+@app.route('/blister_report')
+def blister_report():
+    return render_template('blister_report.html')
+
+@app.route('/changeover_report')
+def changeover_report():
+    return render_template('changeover_report.html')
+
+@app.route('/metrics_dashboard')
+def metrics_dashboard():
+    return render_template('metrics_dashboard.html')
+
+@app.route('/changeover_dashboard')
+def changeover_dashboard():
+    return render_template('changeover_dashboard.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+    app.run(host='0.0.0.0', port=5000, debug=True')
