@@ -64,10 +64,11 @@ def overview():
         values = [request.form.get(field) for field in fields]
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute(f"""
-            INSERT INTO production ({", ".join(fields)})
-            VALUES ({", ".join(["%s"] * len(fields))})
-        """, values)
+        cursor.execute(
+            f"""INSERT INTO production ({", ".join(fields)})
+            VALUES ({", ".join(["%s"] * len(fields))})""",
+            values
+        )
         conn.commit()
         cursor.close()
         conn.close()
@@ -116,4 +117,4 @@ def changeover_dashboard():
     return render_template('changeover_dashboard.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True')
+    app.run(host='0.0.0.0', port=5000, debug=True)
