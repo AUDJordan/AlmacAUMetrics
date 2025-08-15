@@ -10,6 +10,7 @@ body {
     height: 100vh;
     position: fixed;
     overflow-y: auto;
+    font-weight: bold;
 }
 .sidebar .dropdown {
     display: block;
@@ -40,6 +41,9 @@ body {
 .sidebar .dropdown-content a:hover {
     background-color: #C4CFE4;
 }
+.home-button {
+    text-decoration: none;
+}    
 .main-content {
     margin-left: 260px;
     padding: 20px;
