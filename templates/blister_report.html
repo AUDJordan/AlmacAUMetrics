@@ -1,123 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>AU Web Metrics</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="sidebar">
-        <button class="dropdown">Home</button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('overview') }}">Overview</a>
-        </div>
-        <button class="dropdown">Metrics</button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('bavs_report') }}">BAVS</a>
-            <a href="{{ url_for('blister_report') }}">Blister</a>
-        </div>
-        <button class="dropdown">Changeover</button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('changeover_report') }}">Create New</a>
-        </div>
-        <button class="dropdown">Dashboards</button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('metrics_dashboard') }}">Metrics</a>
-            <a href="{{ url_for('changeover_dashboard') }}">Changeovers</a>
-        </div>
-    </div>
-    <div class="main-content">
-        <h1>Blister Metrics Report</h1>
-    <form method="POST">
-        <fieldset>
-            <legend>Metadata</legend>
-            <label>Date:</label>
-            <input type="date" name="date"><br>
+{% extends "base.html" %}
 
-            <label>Room:</label>
-            <input type="text" name="room"><br>
+{% block title %}Blister Metrics Report{% endblock %}
 
-            <label>Shift:</label>
-            <select name="shift">
-                <option value="Shift 1">Shift 1</option>
-                <option value="Shift 2">Shift 2</option>
-            </select><br>
+{% block content %}
+<h1>Blister Metrics Report</h1>
+<form method="POST">
+    <fieldset>
+        <legend>Metadata</legend>
+        <label>Date:</label>
+        <input type="date" name="date"><br>
 
-            <label>Works Order:</label>
-            <input type="text" name="works_order"><br>
+        <label>Room:</label>
+        <input type="text" name="room"><br>
 
-            <label>Product Code:</label>
-            <input type="text" name="product_code"><br>
+        <label>Shift:</label>
+        <select name="shift">
+            <option value="Shift 1">Shift 1</option>
+            <option value="Shift 2">Shift 2</option>
+        </select><br>
 
-            <label>Last Unit Number:</label>
-            <input type="text" name="last_unit"><br>
+        <label>Works Order:</label>
+        <input type="text" name="works_order"><br>
 
-            <label>Hourly Target:</label>
-            <input type="number" name="hourly_target"><br>
+        <label>Product Code:</label>
+        <input type="text" name="product_code"><br>
 
-            <label>Daily Target:</label>
-            <input type="number" name="daily_target"><br>
-        </fieldset>
+        <label>Last Unit Number:</label>
+        <input type="text" name="last_unit"><br>
 
-        <fieldset>
-            <legend>Metrics Tracker</legend>
-            <table border="1">
-                <tr>
-                    <th>Ops</th>
-                    <th>Time</th>
-                    <th>Vial #</th>
-                    <th>Shipper #</th>
-                    <th>Unit #</th>
-                    <th>Hourly Produced</th>
-                    <th>Zed 1 Rejects</th>
-                    <th>Zed 2 Rejects</th>
-                    <th>Z%</th>
-                    <th>Machine Rejects (M%)</th>
-                    <th>Scale Rejects (S%)</th>
-                    <th>Print Rejects (P%)</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="ops"></td>
-                    <td><input type="time" name="time"></td>
-                    <td><input type="text" name="vial_number"></td>
-                    <td><input type="text" name="shipper_number"></td>
-                    <td><input type="text" name="unit_number"></td>
-                    <td><input type="number" name="hourly_produced"></td>
-                    <td><input type="number" name="zed1_rejects"></td>
-                    <td><input type="number" name="zed2_rejects"></td>
-                    <td><input type="number" name="z_percent" step="0.01"></td>
-                    <td><input type="number" name="machine_rejects" step="0.01"></td>
-                    <td><input type="number" name="scale_rejects" step="0.01"></td>
-                    <td><input type="number" name="print_rejects" step="0.01"></td>
-                    <td><input type="text" name="notes"></td>
-                </tr>
-            </table>
-        </fieldset>
+        <label>Hourly Target:</label>
+        <input type="number" name="hourly_target"><br>
 
-        <fieldset>
-            <legend>Actions</legend>
-            <button type="button">Force Re-configure</button>
-            <button type="button">Update Report</button>
-            <button type="button">Force Last Unit</button>
-            <button type="submit">Submit Report</button>
-            <button type="button">Search for Report</button>
-            <button type="reset">Clear Form</button>
-        </fieldset>
-    </form>
-    </div>
-    <script>
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', () => {
-                const content = dropdown.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-    </script>
-</body>
-</html>
+        <label>Daily Target:</label>
+        <input type="number" name="daily_target"><br>
+    </fieldset>
 
-    
+    <fieldset>
+        <legend>Metrics Tracker</legend>
+        <table border="1">
+            <tr>
+                <th>Ops</th>
+                <th>Time</th>
+                <th>Vial #</th>
+                <th>Shipper #</th>
+                <th>Unit #</th>
+                <th>Hourly Produced</th>
+                <th>Zed 1 Rejects</th>
+                <th>Zed 2 Rejects</th>
+                <th>Z%</th>
+                <th>Machine Rejects (M%)</th>
+                <th>Scale Rejects (S%)</th>
+                <th>Print Rejects (P%)</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="ops"></td>
+                <td><input type="time" name="time"></td>
+                <td><input type="text" name="vial_number"></td>
+                <td><input type="text" name="shipper_number"></td>
+                <td><input type="text" name="unit_number"></td>
+                <td><input type="number" name="hourly_produced"></td>
+                <td><input type="number" name="zed1_rejects"></td>
+                <td><input type="number" name="zed2_rejects"></td>
+                <td><input type="number" name="z_percent" step="0.01"></td>
+                <td><input type="number" name="machine_rejects" step="0.01"></td>
+                <td><input type="number" name="scale_rejects" step="0.01"></td>
+                <td><input type="number" name="print_rejects" step="0.01"></td>
+                <td><input type="text" name="notes"></td>
+            </tr>
+        </table>
+    </fieldset>
 
-
+    <fieldset>
+        <legend>Actions</legend>
+        <button type="button">Force Re-configure</button>
+        <button type="button">Update Report</button>
+        <button type="button">Force Last Unit</button>
+        <button type="submit">Submit Report</button>
+        <button type="button">Search for Report</button>
+        <button type="reset">Clear Form</button>
+    </fieldset>
+</form>
+{% endblock %}
