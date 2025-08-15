@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Production Metrics Report</title>
+    <title>AU Web Metrics</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="main-content">
-        <h1>Production Metrics Report</h1>
+        <h1>Overview</h1>
     <form method="POST">
         <fieldset>
             <legend>Metadata</legend>
@@ -63,46 +63,17 @@
             <legend>Metrics Tracker</legend>
             <table border="1">
                 <tr>
-                    <th>Ops</th>
-                    <th>Time</th>
-                    <th>Vial #</th>
-                    <th>Shipper #</th>
-                    <th>Unit #</th>
-                    <th>Hourly Produced</th>
-                    <th>Zed 1 Rejects</th>
-                    <th>Zed 2 Rejects</th>
-                    <th>Z%</th>
-                    <th>Machine Rejects (M%)</th>
-                    <th>Scale Rejects (S%)</th>
-                    <th>Print Rejects (P%)</th>
-                    <th>Notes</th>
+                    
                 </tr>
                 <tr>
-                    <td><input type="text" name="ops"></td>
-                    <td><input type="time" name="time"></td>
-                    <td><input type="text" name="vial_number"></td>
-                    <td><input type="text" name="shipper_number"></td>
-                    <td><input type="text" name="unit_number"></td>
-                    <td><input type="number" name="hourly_produced"></td>
-                    <td><input type="number" name="zed1_rejects"></td>
-                    <td><input type="number" name="zed2_rejects"></td>
-                    <td><input type="number" name="z_percent" step="0.01"></td>
-                    <td><input type="number" name="machine_rejects" step="0.01"></td>
-                    <td><input type="number" name="scale_rejects" step="0.01"></td>
-                    <td><input type="number" name="print_rejects" step="0.01"></td>
-                    <td><input type="text" name="notes"></td>
+                    
                 </tr>
             </table>
         </fieldset>
 
         <fieldset>
             <legend>Actions</legend>
-            <button type="button">Force Re-configure</button>
-            <button type="button">Update Report</button>
-            <button type="button">Force Last Unit</button>
-            <button type="submit">Submit Report</button>
-            <button type="button">Search for Report</button>
-            <button type="reset">Clear Form</button>
+            
         </fieldset>
     </form>
     </div>
