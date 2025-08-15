@@ -1,64 +1,106 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Production Dashboard</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #eee;
-        }
-        tfoot td {
-            font-weight: bold;
-            background-color: #f9f9f9;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>AU Web Metrics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Production Metrics Dashboard</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Ops</th>
-                <th>Time</th>
-                <th>Vial Number</th>
-                <th>Shipper Number</th>
-                <th>Unit Number</th>
-                <th>Hourly Produced</th>
-                <th>Zed 1 Rejects</th>
-                <th>Zed 2 Rejects</th>
-                <th>Z%</th>
-                <th>Machine Rejects (M%)</th>
-                <th>Scale Rejects (S%)</th>
-                <th>Print Rejects (P%)</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data rows will be inserted here dynamically -->
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5">Current/Total</td>
-                <td><!-- Total Hourly Produced --></td>
-                <td><!-- Total Zed 1 Rejects --></td>
-                <td><!-- Total Zed 2 Rejects --></td>
-                <td><!-- Total Z% --></td>
-                <td><!-- Total M% --></td>
-                <td><!-- Total S% --></td>
-                <td><!-- Total P% --></td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
+    <div class="sidebar">
+        <button class="dropdown">Home</button>
+        <div class="dropdown-content">
+            <a href="overview.html">Overview</a>
+        </div>
+        <button class="dropdown">Metrics</button>
+        <div class="dropdown-content">
+            <a href="bavs_report.html">BAVS</a>
+            <a href="blister_report.html">Blister</a>
+        </div>
+        <button class="dropdown">Changeover</button>
+        <div class="dropdown-content">
+            <a href="changeover_report.html">Create New</a>
+        </div>
+        <button class="dropdown">Dashboards</button>
+        <div class="dropdown-content">
+            <a href="metrics_dashboard.html">Metrics</a>
+            <a href="changeover_dashboard.html">Changeovers</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Metrics Dashboard</h1>
+    <form method="POST">
+        <fieldset>
+            <legend>Metadata</legend>
+            <label>Date:</label>
+            <input type="date" name="date"><br>
+
+            <label>Room:</label>
+            <input type="text" name="room"><br>
+
+            <label>Shift:</label>
+            <select name="shift">
+                <option value="Shift 1">Shift 1</option>
+                <option value="Shift 2">Shift 2</option>
+            </select><br>
+
+            <label>Works Order:</label>
+            <input type="text" name="works_order"><br>
+
+            <label>Product Code:</label>
+            <input type="text" name="product_code"><br>
+
+            <label>Last Unit Number:</label>
+            <input type="text" name="last_unit"><br>
+
+            <label>Hourly Target:</label>
+            <input type="number" name="hourly_target"><br>
+
+            <label>Daily Target:</label>
+            <input type="number" name="daily_target"><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Metrics Tracker</legend>
+            <table border="1">
+                <tr>
+                    
+                </tr>
+                <tr>
+                    <td><input type="text" name="ops"></td>
+                    <td><input type="time" name="time"></td>
+                    <td><input type="text" name="vial_number"></td>
+                    <td><input type="text" name="shipper_number"></td>
+                    <td><input type="text" name="unit_number"></td>
+                    <td><input type="number" name="hourly_produced"></td>
+                    <td><input type="number" name="zed1_rejects"></td>
+                    <td><input type="number" name="zed2_rejects"></td>
+                    <td><input type="number" name="z_percent" step="0.01"></td>
+                    <td><input type="number" name="machine_rejects" step="0.01"></td>
+                    <td><input type="number" name="scale_rejects" step="0.01"></td>
+                    <td><input type="number" name="print_rejects" step="0.01"></td>
+                    <td><input type="text" name="notes"></td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Actions</legend>
+            
+        </fieldset>
+    </form>
+    </div>
+    <script>
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', () => {
+                const content = dropdown.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
 </body>
 </html>
+
+    
+
+
