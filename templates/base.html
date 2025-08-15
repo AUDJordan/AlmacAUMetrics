@@ -8,11 +8,14 @@
 </head>
 <body>
     <div class="sidebar">
-        <button class="dropdown">Home</button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('overview') }}">Overview</a>
+        <div style="text-align: center; padding: 10px;">
+            <a href="{{ url_for('overview') }}">
+                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" style="max-width: 200px;">
+            </a>
         </div>
+        <a class="dropdown" href="{{ url_for('overview') }}">Home</a>
         <button class="dropdown">Metrics</button>
+
         <div class="dropdown-content">
             <a href="{{ url_for('bavs_report') }}">BAVS</a>
             <a href="{{ url_for('blister_report') }}">Blister</a>
