@@ -5,7 +5,7 @@ body {
 }
 .sidebar {
     width: 250px;
-    background-color: #123E95;
+    background-color: #003690;
     padding-top: 20px;
     height: 100vh;
     position: fixed;
@@ -13,7 +13,7 @@ body {
 }
 .sidebar .dropdown {
     display: block;
-    background-color: #4D6EAF;
+    background-color: #003690;
     color: white;
     padding: 10px;
     cursor: pointer;
@@ -28,7 +28,7 @@ body {
 }
 .sidebar .dropdown-content {
     display: none;
-    background-color: #889EC9;
+    background-color: #4D6EAF;
     padding-left: 20px;
 }
 .sidebar .dropdown-content a {
