@@ -1,3 +1,36 @@
+<div class="sidebar">
+    <button class="dropdown" onclick="toggleDropdown('homeDropdown')">Home</button>
+    <div id="homeDropdown" class="dropdown-content">
+        <a href="#">Dashboard</a>
+        <a href="#">Overview</a>
+    </div>
+
+    <button class="dropdown" onclick="toggleDropdown('submitDropdown')">Submit Report</button>
+    <div id="submitDropdown" class="dropdown-content">
+        <a href="#">New Entry</a>
+        <a href="#">Upload File</a>
+    </div>
+
+    <button class="dropdown" onclick="toggleDropdown('searchDropdown')">Search Reports</button>
+    <div id="searchDropdown" class="dropdown-content">
+        <a href="#">By Date</a>
+        <a href="#">By Product</a>
+    </div>
+
+    <button class="dropdown" onclick="toggleDropdown('clearDropdown')">Clear Form</button>
+    <div id="clearDropdown" class="dropdown-content">
+        <a href="#">Reset Fields</a>
+        <a href="#">Clear All</a>
+    </div>
+</div>
+
+<script>
+function toggleDropdown(id) {
+    var dropdown = document.getElementById(id);
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+</script>
+<div class="main-content">
 
 <!DOCTYPE html>
 <html>
@@ -86,3 +119,5 @@
     </form>
 </body>
 </html>
+
+</div>
