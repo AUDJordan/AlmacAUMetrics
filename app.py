@@ -73,7 +73,7 @@ def form():
         cursor.close()
         conn.close()
         return redirect(url_for('form'))
-    return render_template('form.html')
+    return render_template('overview.html')  # updated
 
 @app.route('/dashboard')
 def dashboard():
@@ -82,7 +82,6 @@ def dashboard():
     cursor.execute('SELECT * FROM production')
     data = cursor.fetchall()
 
-    # Calculate summary totals
     summary = {
         'hourly_produced': sum(row[14] or 0 for row in data),
         'zed1_rejects': sum(row[15] or 0 for row in data),
@@ -95,7 +94,7 @@ def dashboard():
 
     cursor.close()
     conn.close()
-    return render_template('dashboard.html', data=data, summary=summary)
+    return render_template('metrics_dashboard.html', data=data, summary=summary)  
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
