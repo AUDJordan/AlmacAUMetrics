@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}AU Web Metrics{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <button class="dropdown">Home</button>
+        <div class="dropdown-content">
+            <a href="{{ url_for('overview') }}">Overview</a>
+        </div>
+        <button class="dropdown">Metrics</button>
+        <div class="dropdown-content">
+            <a href="{{ url_for('bavs_report') }}">BAVS</a>
+            <a href="{{ url_for('blister_report') }}">Blister</a>
+        </div>
+        <button class="dropdown">Changeover</button>
+        <div class="dropdown-content">
+            <a href="{{ url_for('changeover_report') }}">Create New</a>
+        </div>
+        <button class="dropdown">Dashboards</button>
+        <div class="dropdown-content">
+            <a href="{{ url_for('metrics_dashboard') }}">Metrics</a>
+            <a href="{{ url_for('changeover_dashboard') }}">Changeovers</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', () => {
+                const content = dropdown.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>
