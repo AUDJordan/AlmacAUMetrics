@@ -1,45 +1,33 @@
-<div class="sidebar">
-    <button class="dropdown" onclick="toggleDropdown('homeDropdown')">Home</button>
-    <div id="homeDropdown" class="dropdown-content">
-        <a href="#">Dashboard</a>
-        <a href="#">Overview</a>
-    </div>
-
-    <button class="dropdown" onclick="toggleDropdown('submitDropdown')">Submit Report</button>
-    <div id="submitDropdown" class="dropdown-content">
-        <a href="#">New Entry</a>
-        <a href="#">Upload File</a>
-    </div>
-
-    <button class="dropdown" onclick="toggleDropdown('searchDropdown')">Search Reports</button>
-    <div id="searchDropdown" class="dropdown-content">
-        <a href="#">By Date</a>
-        <a href="#">By Product</a>
-    </div>
-
-    <button class="dropdown" onclick="toggleDropdown('clearDropdown')">Clear Form</button>
-    <div id="clearDropdown" class="dropdown-content">
-        <a href="#">Reset Fields</a>
-        <a href="#">Clear All</a>
-    </div>
-</div>
-
-<script>
-function toggleDropdown(id) {
-    var dropdown = document.getElementById(id);
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
-</script>
-<div class="main-content">
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Production Metrics Form</title>
+    <meta charset="UTF-8">
+    <title>Production Metrics Report</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Production Metrics Report</h1>
+    <div class="sidebar">
+        <button class="dropdown">Home</button>
+        <div class="dropdown-content">
+            <a href="#">Overview</a>
+        </div>
+        <button class="dropdown">Metrics</button>
+        <div class="dropdown-content">
+            <a href="#">BAVS</a>
+            <a href="#">Blister</a>
+        </div>
+        <button class="dropdown">Changeover</button>
+        <div class="dropdown-content">
+            <a href="#">Create New</a>
+        </div>
+        <button class="dropdown">Dashboards</button>
+        <div class="dropdown-content">
+            <a href="#">Metrics</a>
+            <a href="#">Changeovers</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>Production Metrics Report</h1>
     <form method="POST">
         <fieldset>
             <legend>Metadata</legend>
@@ -117,7 +105,20 @@ function toggleDropdown(id) {
             <button type="reset">Clear Form</button>
         </fieldset>
     </form>
+    </div>
+    <script>
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', () => {
+                const content = dropdown.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
 </body>
 </html>
 
-</div>
+    
+
+
+
